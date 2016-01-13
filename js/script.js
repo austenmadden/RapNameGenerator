@@ -13,20 +13,39 @@
  **/
 
 function Generator() {
-
     /* Name Arrays: Customize names to change possible output */
+  this.initialize = function () {
+    document.getElementById("enter").addEventListener("click", this.createRapName);
+  }
+
+  this.createRapName = function () {
+    this.userName = document.getElementById("user-input").value.toString();
     this.last_names = ['the Chef', 'Digital', 'Wise', 'Knight', 'Wrecka', 'the Genius', 'the Zoo Keeper', 'the Monk', 'the Scientist', 'the Disciple', 'the Darkman', 'Pellegrino', 'the Ill Figure', 'Rocks The World', 'the Baptist',];
     this.first_names = ['Inspectah', 'Masta', 'Poppa', 'Five Foot', 'Ghostface', 'Old Dirty'];
+    var passwordPattern = /([a-zA-Z]+)/;
 
+    if (!((passwordPattern).test(this.userName) && this.userName.length > 0)) {
+      $(".alert-danger").show();
+      $(".alert-success").hide();
+    } else {
+      $(".alert-danger").hide();
+      if ((Math.floor(Math.random() * (2))) == 0) {
+      var nameModifier = this.first_names[Math.floor(Math.random()*(this.first_names).length)];
+      this.userName = nameModifier + ' ' + this.userName;
+    } else {
+      var nameModifier = this.last_names[Math.floor(Math.random()*(this.last_names).length)];
+      this.userName = this.userName + ' ' + nameModifier;
+    }
+      $(".alert-success").html('<p>' + this.userName + '</p>');
+      $(".alert-success").show();
+    }
+  }
 }
-
-
-//Add your codez here
 
 
 $(document).ready(function() {
 
-    var engine = new Generator;
-    //Add your codez here
+  engine = new Generator;
+  engine.initialize();
 
 });
